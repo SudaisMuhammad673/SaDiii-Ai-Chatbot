@@ -4,6 +4,8 @@ const messages = document.getElementById("messages");
 const welcome = document.getElementById("welcome");
 const newChatBtn = document.getElementById("newChatBtn");
 
+let conversation = [];
+
 function addMessage(text, sender) {
   welcome.style.display = "none";
   const row = document.createElement("div");
@@ -16,27 +18,19 @@ function addMessage(text, sender) {
   bubble.textContent = text;
   row.append(avatar, bubble);
   messages.appendChild(row);
-  document.getElementById("chatContent").scrollTop = document.getElementById("chatContent").scrollHeight;
+  const chatContent = document.getElementById("chatContent");
+  chatContent.scrollTop = chatContent.scrollHeight;
 }
 
-function getReply(message) {
-  const text = message.toLowerCase();
-  if (/(hello|hi|hey|salam|assalam)/.test(text)) return "Hey! 👋 I'm SaDiii AI, your demo assistant. What would you like to explore today?";
-  if (/(python|javascript|c\+\+|html|css|coding|programming)/.test(text)) return "Great topic! 💻 A good way to improve is to build small projects, practise problem-solving, and read code written by others. Tell me your current level and I can suggest a learning path.";
-  if (/(artificial intelligence|\bai\b|machine learning| ml )/.test(text)) return "Artificial Intelligence is a field of computer science focused on building systems that can perform tasks that usually require human intelligence, such as understanding language, recognizing patterns, and making predictions. 🤖";
-  if (/(project|idea)/.test(text)) return "Here are 3 beginner-friendly ideas:\n1. Personal portfolio website\n2. Smart expense tracker\n3. Quiz app with a score system\n\nChoose one and I can help you plan its features!";
-  if (/(thank|thanks|shukriya)/.test(text)) return "You're welcome! 😊 Keep learning and keep building.";
-  if (/(who are you|your name)/.test(text)) return "I'm SaDiii AI, a simple chatbot demo made with HTML, CSS, and JavaScript. I'm here to demonstrate how a chat interface works!";
-  if (/(help|what can you do)/.test(text)) return "I can respond to a few common topics in this demo, including programming, AI, and project ideas. Try one of the suggestion cards above!";
-  return "That's an interesting question! I'm currently a frontend demo, so my replies come from simple JavaScript rules rather than a live AI model. You can connect an AI API later to make me much smarter. ✨";
-}
-
-function sendMessage(value) {
+async function sendMessage(value) {
   const message = value.trim();
   if (!message) return;
+
   addMessage(message, "user");
+  conversation.push({ role: "user", content: message });
   userInput.value = "";
   userInput.style.height = "auto";
+  userInput.disabled = true;
 
   const typing = document.createElement("div");
   typing.className = "typing";
@@ -44,10 +38,29 @@ function sendMessage(value) {
   messages.appendChild(typing);
   document.getElementById("chatContent").scrollTop = document.getElementById("chatContent").scrollHeight;
 
-  window.setTimeout(() => {
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: conversation.slice(-12) })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "The AI service could not complete your request.");
+    }
+
+    const reply = data.reply || "I couldn't generate a response. Please try again.";
+    conversation.push({ role: "model", content: reply });
     typing.remove();
-    addMessage(getReply(message), "bot");
-  }, 550);
+    addMessage(reply, "bot");
+  } catch (error) {
+    typing.remove();
+    addMessage(`Sorry, I couldn't connect to SaDiii AI right now. ${error.message}`, "bot");
+  } finally {
+    userInput.disabled = false;
+    userInput.focus();
+  }
 }
 
 chatForm.addEventListener("submit", (event) => {
@@ -67,6 +80,7 @@ document.querySelectorAll(".suggestion").forEach((button) => {
 newChatBtn.addEventListener("click", () => {
   messages.innerHTML = "";
   welcome.style.display = "block";
+  conversation = [];
   userInput.value = "";
   userInput.focus();
 });
