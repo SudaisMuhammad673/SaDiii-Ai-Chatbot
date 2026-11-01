@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A clean, responsive AI chatbot mini project built with HTML, CSS and JavaScript." />
+  <title>SaDiii AI Chatbot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">✦</div><span>SaDiii<span class="brand-light"> AI</span></span></div>
+      <button class="new-chat" id="newChatBtn">＋ <span>New chat</span></button>
+      <div class="side-label">YOUR ASSISTANT</div>
+      <div class="assistant-card">
+        <div class="avatar">✦</div>
+        <div><strong>SaDiii AI Assistant</strong><small>Ready to help you</small></div>
+        <span class="online-dot"></span>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="tip-icon">ⓘ</div>
+        <p><strong>Mini project demo</strong><br>Built with HTML, CSS & JavaScript. Connect an AI API to enable real AI responses.</p>
+      </div>
+    </aside>
+
+    <section class="chat-area">
+      <header class="topbar">
+        <div class="mobile-brand">✦ nova.ai</div>
+        <div class="status"><span class="online-dot"></span> Online</div>
+      </header>
+
+      <div class="chat-content" id="chatContent">
+        <div class="welcome" id="welcome">
+          <div class="welcome-orb">✦</div>
+          <p class="eyebrow">YOUR PERSONAL AI ASSISTANT</p>
+          <h1>Hey there! <span>How can I help?</span></h1>
+          <p class="welcome-copy">Ask me a question, explore an idea, or get help with your next project.</p>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="Give me 3 beginner Python project ideas."><span>⌘</span><b>Python project ideas</b><small>Start building something</small></button>
+            <button class="suggestion" data-prompt="Explain artificial intelligence in simple words."><span>✧</span><b>Explain artificial intelligence</b><small>Learn something new</small></button>
+            <button class="suggestion" data-prompt="Give me a daily study plan for a computer science student."><span>◷</span><b>Create a study plan</b><small>Make my day productive</small></button>
+            <button class="suggestion" data-prompt="What are the differences between HTML, CSS and JavaScript?"><span>⌘</span><b>Web development basics</b><small>Understand the basics</small></button>
+          </div>
+        </div>
+        <div class="messages" id="messages" aria-live="polite"></div>
+      </div>
+
+      <div class="composer-wrap">
+        <form class="composer" id="chatForm">
+          <textarea id="userInput" rows="1" placeholder="Message SaDiii AI..." aria-label="Write your message"></textarea>
+          <button class="send-btn" type="submit" aria-label="Send message">↑</button>
+        </form>
+        <p class="disclaimer">SaDiii AI is a demo assistant. It may provide inaccurate information.</p>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

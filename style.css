@@ -1,0 +1,72 @@
+* { box-sizing: border-box; }
+:root {
+  --bg: #0b1020; --panel: #11182b; --panel-2: #151e34; --line: rgba(255,255,255,.08);
+  --text: #eef2ff; --muted: #929db7; --accent: #8b7cff; --accent-2: #54d6c8;
+}
+body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: Inter, sans-serif; }
+button, textarea { font: inherit; }
+.app { min-height: 100vh; display: grid; grid-template-columns: 270px 1fr; }
+.sidebar { background: #0e1527; border-right: 1px solid var(--line); padding: 28px 20px; display: flex; flex-direction: column; }
+.brand { display:flex; align-items:center; gap:11px; font-size:22px; font-weight:800; letter-spacing:-1px; margin: 0 0 38px 4px; }
+.brand-icon, .avatar { display:grid; place-items:center; background:linear-gradient(135deg,var(--accent),#5e9bff); color:white; border-radius:12px; width:34px; height:34px; box-shadow:0 6px 24px #7665ff44; }
+.brand-light { color:var(--accent-2); }
+.new-chat { width:100%; border:1px solid #343d57; background:#1a2440; color:white; padding:13px 15px; border-radius:11px; text-align:left; cursor:pointer; transition:.2s; }
+.new-chat:hover { background:#222f50; transform:translateY(-1px); }
+.new-chat span { margin-left:8px; font-weight:600; }
+.side-label { color:#697591; font-size:10px; font-weight:800; letter-spacing:1.5px; margin:34px 0 13px 5px; }
+.assistant-card { display:flex; align-items:center; gap:11px; padding:12px; border:1px solid var(--line); background:#151e32; border-radius:12px; }
+.avatar { width:36px; height:36px; border-radius:10px; flex-shrink:0; }
+.assistant-card strong { display:block; font-size:12px; }
+.assistant-card small { display:block; color:var(--muted); font-size:10px; margin-top:4px; }
+.online-dot { width:7px; height:7px; border-radius:50%; background:#45d6a3; margin-left:auto; box-shadow:0 0 10px #45d6a377; }
+.sidebar-bottom { margin-top:auto; display:flex; gap:10px; padding:13px 10px; color:var(--muted); background:#141d31; border-radius:10px; font-size:10px; line-height:1.7; }
+.sidebar-bottom p { margin:0; }
+.sidebar-bottom strong { color:#dce3f7; }
+.tip-icon { color:var(--accent-2); font-size:16px; }
+.chat-area { min-width:0; display:flex; flex-direction:column; height:100vh; }
+.topbar { height:70px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:flex-end; padding:0 34px; }
+.status { color:#9ba7c2; font-size:11px; display:flex; align-items:center; gap:8px; }
+.status .online-dot { margin:0; }
+.mobile-brand { display:none; }
+.chat-content { flex:1; overflow-y:auto; padding:44px 24px 30px; }
+.welcome { max-width:760px; margin:6vh auto 0; text-align:center; }
+.welcome-orb { margin:0 auto 22px; width:58px; height:58px; border-radius:19px; display:grid; place-items:center; font-size:26px; background:linear-gradient(135deg,#8b7cff,#4b9eff); box-shadow:0 12px 45px #7566ff44; }
+.eyebrow { color:var(--accent-2); letter-spacing:2px; font-size:9px; font-weight:800; }
+h1 { font-size:clamp(29px,4vw,43px); letter-spacing:-1.8px; margin:13px 0 10px; }
+h1 span { color:#9a91ff; }
+.welcome-copy { color:var(--muted); font-size:13px; line-height:1.7; margin:0 auto; max-width:440px; }
+.suggestions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:620px; margin:36px auto 0; text-align:left; }
+.suggestion { border:1px solid var(--line); background:#121b30; color:var(--text); padding:16px; border-radius:13px; cursor:pointer; transition:.2s; text-align:left; }
+.suggestion:hover { border-color:#7166d8; background:#192440; transform:translateY(-2px); }
+.suggestion span { color:var(--accent-2); font-size:16px; display:block; margin-bottom:13px; }
+.suggestion b { display:block; font-size:11px; }
+.suggestion small { display:block; color:var(--muted); font-size:10px; margin-top:5px; }
+.messages { max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:20px; }
+.message { display:flex; gap:12px; align-items:flex-start; animation:fadeIn .25s ease; }
+.message.user { flex-direction:row-reverse; }
+.message-avatar { flex:0 0 30px; height:30px; border-radius:10px; display:grid; place-items:center; background:#222d4a; color:#a99fff; font-size:13px; }
+.message.user .message-avatar { background:#236d70; color:#d4fffa; }
+.bubble { max-width:min(82%,620px); padding:13px 16px; border:1px solid var(--line); background:#141e33; border-radius:4px 14px 14px 14px; color:#e0e6f7; font-size:12px; line-height:1.75; white-space:pre-wrap; }
+.message.user .bubble { background:#28264b; border-color:#514b8b; border-radius:14px 4px 14px 14px; }
+.composer-wrap { padding:14px 24px 18px; }
+.composer { max-width:760px; margin:0 auto; display:flex; gap:10px; align-items:flex-end; padding:10px 11px 10px 17px; border:1px solid #343e59; background:#151e32; border-radius:15px; box-shadow:0 12px 35px #0003; }
+textarea { resize:none; flex:1; min-height:25px; max-height:120px; border:0; outline:0; background:transparent; color:var(--text); font-size:12px; line-height:1.6; padding:3px 0; }
+textarea::placeholder { color:#75819c; }
+.send-btn { width:34px; height:34px; border:0; border-radius:10px; background:linear-gradient(135deg,#8b7cff,#5a9cff); color:white; font-size:20px; cursor:pointer; transition:.2s; }
+.send-btn:hover { transform:translateY(-2px); box-shadow:0 5px 18px #786bff55; }
+.disclaimer { text-align:center; color:#68748f; font-size:9px; margin:10px 0 0; }
+.typing { color:#99a4bf; font-size:11px; padding:5px 0; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(6px)} to {opacity:1; transform:translateY(0)} }
+@media(max-width:700px) {
+  .app { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  .chat-area { height:100dvh; }
+  .topbar { height:58px; justify-content:space-between; padding:0 18px; }
+  .mobile-brand { display:block; font-weight:800; font-size:15px; }
+  .chat-content { padding:30px 16px 20px; }
+  .welcome { margin-top:7vh; }
+  .suggestions { gap:9px; margin-top:27px; }
+  .suggestion { padding:13px; }
+  .composer-wrap { padding:10px 13px 14px; }
+}
+@media(max-width:390px) { .suggestions { grid-template-columns:1fr; } }
